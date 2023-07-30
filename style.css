@@ -1,0 +1,201 @@
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Ysabeau SC', sans-serif;
+    font-weight: bold;
+
+}
+p , button {
+    font-size: 20px;
+}
+ 
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: url('img/img.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+}
+.container {
+    width: 420px;
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #c1cce6;
+    backdrop-filter: blur(5px);
+    box-shadow: 1px 1px 20px  rgb(5, 181, 194);
+    transition: all 0.3s ease;
+}
+
+.encrypt h2 {
+    text-align: center;
+}
+.b {
+    display: none;
+}
+
+.input-field {
+
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+.input-field .Ptext,.input-field .Dtext, .input-field .d, .input-field .n {
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    padding: 20px;
+    background: transparent;
+    border: 2px solid #121d33;
+    font-size: 18px;
+    color: #121d33;
+    outline: none;
+}
+::placeholder{
+    color: black;
+    text-shadow: 0 0 10px #fff,0 0 20px #fff,0 0 40px #fff,0 0 80px #fff,0 0 120px #fff,0 0 160px #fff;
+    transition: all .3s ease;
+   
+}
+.but {
+    display: flex;
+    justify-content: center;
+}
+
+.but button{
+    padding: 5px 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: transparent;
+    border-style: solid;
+
+}
+
+.container p {
+    text-align: center;
+}
+
+.list {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px 0;
+    
+}
+
+.con-btn {
+    width: 130px;
+    height: 40px;
+    position: relative;
+    border-radius: 20px;
+    background: linear-gradient(#14ffe9, #ffeb3b,#ff00e0);
+}
+.con-btn-stop {
+    width: 130px;
+    height: 40px;
+    position: relative;
+
+}
+
+.con-btn span{ 
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: inherit;
+    border-radius: 20px;
+}
+.con-btn button{ 
+    padding: 0 10px;
+    border-radius: 20px;
+    padding-bottom: 4px;
+    border: 1px solid lightcyan;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: transparent;
+    transform: translate(-50%,-50%);
+    z-index: 9;
+}
+.con-btn-stop button{ 
+    padding: 0 10px;
+    padding-bottom: 4px;
+    border-radius: 20px;
+    border: 1px solid lightcyan;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: transparent;
+    transform: translate(-50%,-50%);
+    z-index: 9;
+}
+
+
+.con-btn span:nth-child(1){
+    filter: blur(10px);
+}
+.con-btn span:nth-child(2){
+    filter: blur(10px);
+}
+
+.con-btn {
+    animation: rotate .8s linear infinite;
+}
+
+@keyframes rotate{
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100%{
+        filter: hue-rotate(360deg);
+    }
+}
+
+.encrypted-text,h2 {
+    text-align: center;
+}
+.hover {
+    transition: all .1s ease;
+}
+
+.hover:hover {
+    color: #fff;
+    border-color: #fff;
+    box-shadow:0 0 20px rgb(5, 181, 194) ;
+}
+
+.hover:active{
+    opacity: 0.8;
+    scale: 0.98;
+}
+
+input {
+    border: 1px solid #121d33;
+    box-shadow: 0 0 10px #fff;
+    transition: all .3s ease;
+}
+
+input:hover, input:focus, input:valid {
+    border: 1px solid #fff;
+    box-shadow: 0 0 20px #14ffe9;
+
+}
+
+input:hover::placeholder, input:focus::placeholder {
+    color: #fff;
+    
+    text-shadow: 0 0 10px #14ffe9,0 0 20px #14ffe9,0 0 40px #14ffe9,0 0 80px #14ffe9,0 0 120px #14ffe9,0 0 160px #14ffe9;
+}
+
+.input-field .valid:valid {
+    color: #fff;
+    text-shadow: 0 0 10px #14ffe9,0 0 20px #14ffe9,0 0 40px #14ffe9,0 0 80px #14ffe9,0 0 120px #14ffe9,0 0 160px #14ffe9
+}
+
+#intro {
+    text-shadow: 0px 0px 15px  #fff;
+}

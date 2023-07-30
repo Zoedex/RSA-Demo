@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ysabeau+SC:wght@300&display=swap" rel="stylesheet">
+    <title>RSA Crytosystem</title>
+</head>
+<body>
+    <div>
+        <div class="container">
+            <div class="list">
+                <div id="En" class="con-btn">
+                    <button >Encryption</button>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div id="De" class="con-btn-stop">
+                    <button >Decryption</button> 
+                    <span></span>
+                    <span></span>
+                </div>  
+            </div>
+            <h2 id="intro">Input a plain text to encrypt.</h2>
+              <div class="input-field a">
+                <input class="Ptext valid" type="text" placeholder="Plaint text" required>
+              </div>
+              <div class="input-field b">
+                <input class="Dtext valid" type="text" placeholder="Encryted text" required>
+              </div>
+              <div class="input-field b">
+                <input class="d valid" type="text" placeholder="exponential d" required>
+              </div>
+              <div class="input-field b">
+                <input class="n valid" type="text" placeholder="Modulus n" required>
+              </div>
+              <div class="but">
+                <button class="hover" id="Enc">Encrypt</button>
+              </div>
+              <div class="but">
+                <button class="hover" style="display: none;" id="Dec">Decrypt</button>
+              </div>
+              <p class="encrypted-text">Encrypted text will appear here.</p>
+              <p style="display: none;" class="decrypted-text">Decrypted text will appear here.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+// Get the buttons, divs and other elements by id and class
+var deButton = document.getElementById("De");
+var enButton = document.getElementById("En");
+var aDivs = document.getElementsByClassName("a");
+var bDivs = document.getElementsByClassName("b");
+var intro = document.getElementById("intro");
+var Enc = document.getElementById("Enc");
+// Get the Dec button by id
+var Dec = document.getElementById("Dec");
+var encryptedText = document.getElementsByClassName("encrypted-text");
+var decryptedText = document.getElementsByClassName("decrypted-text");
+
+// Define a function to toggle the display of a collection of elements
+function toggleDisplay(elements, value) {
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].style.display = value;
+  }
+}
+
+// Define a function to change the class name of an element
+function changeClass(element, newClass) {
+  element.className = newClass;
+}
+
+// Define a function to change the text of an element
+function changeText(element, newText) {
+  element.textContent = newText;
+}
+
+// Add click event listeners to the buttons
+deButton.addEventListener("click", function() {
+  // Display b divs and hide a divs
+  toggleDisplay(bDivs, "block");
+  toggleDisplay(aDivs, "none");
+  // Change the class name of deButton to con-btn and enButton to con-btn-stop
+  changeClass(deButton, "con-btn");
+  changeClass(enButton, "con-btn-stop");
+  // Change the text of intro, Enc and encryptedText
+  changeText(intro, "Input Encrypted text and the private key.");
+  toggleDisplay(encryptedText, "none");
+  toggleDisplay(decryptedText, "block")
+  // Display Dec button and hide Enc button
+  Dec.style.display = "block";
+  Enc.style.display = "none";
+});
+
+enButton.addEventListener("click", function() {
+  // Display a divs and hide b divs
+  toggleDisplay(aDivs, "block");
+  toggleDisplay(bDivs, "none");
+  // Change the class name of enButton to con-btn and deButton to con-btn-stop
+  changeClass(enButton, "con-btn");
+  changeClass(deButton, "con-btn-stop");
+  // Change the text of intro, Enc and encryptedText back to original
+  changeText(intro, "Input a plain text to encrypt.");
+  toggleDisplay(encryptedText, "block");
+  toggleDisplay(decryptedText, "none")
+  // Display Enc button and hide Dec button
+  Enc.style.display = "block";
+  Dec.style.display = "none";
+});
+
+
+
+
+
+// Get the input box element by class name
+var inputP = document.getElementsByClassName("Ptext")[0];
+
+// Get the encryption button element by id
+var buttonEnc = document.getElementById("Enc");
+
+// Get the decryption button element by id
+var buttonDec = document.getElementById("Dec");
+
+// Get the output element for encrypted text by class name
+var outputE = document.getElementsByClassName("encrypted-text")[0];
+
+// Get the input element for decrypted text by class name
+var inputD = document.getElementsByClassName("Dtext")[0];
+
+// Get the input element for exponential d by class name
+var inputd = document.getElementsByClassName("d")[0];
+
+// Get the input element for modulus n by class name
+var inputn = document.getElementsByClassName("n")[0];
+
+// Get the output element for decrypted text by class name
+var outputD = document.getElementsByClassName("decrypted-text")[0];
+
+// Define the RSA parameters
+var p = 43; // first prime number
+var q = 59; // second prime number
+var n = p * q; // modulus
+var e = 13; // public exponent
+var d = 937; // private exponent
+
+// Define a function to convert a letter to a two-digit number
+function letterToNumber(letter) {
+  // Get the ASCII code of the letter
+  var code = letter.charCodeAt(0);
+
+  // If the code is 32 (space), return 26
+  if (code == 32) {
+    return "26";
+  }
+
+  // Subtract 65 to get the alphabetical index (A is 0, B is 1, etc.)
+  var index = code - 65;
+
+  // Add a leading zero if the index is less than 10
+  if (index < 10) {
+    return "0" + index;
+  } else {
+    return index.toString();
+  }
+}
+
+
+// Define a function to convert a two-digit number to a letter
+function numberToLetter(number) {
+  // Convert the number to an integer
+  var index = parseInt(number);
+
+  // If the index is 26, return a space
+  if (index == 26) {
+    return " ";
+  }
+
+  // Add 65 to get the ASCII code of the letter (A is 65, B is 66, etc.)
+  var code = index + 65;
+
+  // Convert the code to a character
+  var letter = String.fromCharCode(code);
+
+  // Return the letter
+  return letter;
+}
+
+
+
+// Define a function to perform modular exponentiation using binary algorithm
+function modPow(base, exponent, modulus) {
+  // If the modulus is 1, return 0
+  if (modulus == 1) {
+    return 0;
+  }
+
+  // Initialize the result to 1
+  var result = 1;
+
+  // Loop until the exponent is zero
+  while (exponent > 0) {
+    // If the exponent is odd, multiply the result by the base modulo the modulus
+    if (exponent % 2 == 1) {
+      result = (result * base) % modulus;
+    }
+
+    // Divide the exponent by 2 and square the base modulo the modulus
+    exponent = Math.floor(exponent / 2);
+    base = (base * base) % modulus;
+  }
+
+  // Return the result
+  return result;
+}
+
+// Define a function to encrypt a message using RSA
+function encrypt(message) {
+
+
+  // Translate each letter to a two-digit number and concatenate them
+  var numbers = message.split("").map(letterToNumber).join("");
+
+  // Find the largest even number N such that the number with N digits of "25" does not exceed n
+  var N = Math.floor(Math.log(n) / Math.log(100));
+
+  // Divide the numbers into blocks of size N and pad the last block with "23" (X) if necessary
+  var blocks = [];
+  for (var i = 0; i < numbers.length; i += N) {
+    var block = numbers.slice(i, i + N);
+    while (block.length < N) {
+      block += "23";
+    }
+    blocks.push(block);
+  }
+
+  // Encrypt each block using modular exponentiation and join them with a space
+  var encrypted = blocks.map(function(block) {
+    var m = parseInt(block);
+    var c = modPow(m, e, n);
+    return c.toString();
+  }).join(" ");
+
+  // Return the encrypted message
+  return encrypted;
+}
+
+// Define a function to decrypt a message using RSA
+function decrypt(message, d, n) {
+   // Split the message into blocks by space
+   var blocks = message.split(" ");
+
+   // Decrypt each block using modular exponentiation and join them without space
+   var numbers = blocks.map(function(block) {
+     var c = parseInt(block);
+     var m = modPow(c, d, n);
+     return m.toString();
+   }).join("");
+
+   // Find the largest even number N such that the number with N digits of "25" does not exceed n
+   var N = Math.floor(Math.log(n) / Math.log(100));
+
+   // Pad the numbers with zeros if they are less than N digits long
+   var padded = "";
+   for (var i = 0; i < numbers.length; i += N) {
+     var chunk = numbers.slice(i, i + N);
+     while (chunk.length < N) {
+       chunk = "0" + chunk;
+     }
+     padded += chunk;
+   }
+
+   // Divide the padded numbers into pairs of digits and convert them to letters
+   var letters = [];
+   for (var i = 0; i < padded.length; i +=2 ) {
+     var pair = padded.slice(i, i +2 );
+     var letter = numberToLetter(pair);
+     letters.push(letter);
+   }
+
+    // Remove any trailing Xs from the plaintext message
+    while (letters[letters.length -1] == "X") {
+      letters.pop();
+    }
+
+    // Join the letters into a string and return it
+    var decrypted = letters.join("");
+    return decrypted;
+}
+
+
+
+
+// Add an event listener to the encryption button
+buttonEnc.addEventListener("click", function() {
+   // Get the input text value
+   var textP = inputP.value;
+
+   // Encrypt the text using RSA and display it in the output element for encrypted text
+   var encrypted = encrypt(textP);
+   outputE.textContent = encrypted;
+});
+
+// Add an event listener to the decryption button
+buttonDec.addEventListener("click", function() {
+   // Get the input values for decrypted text, exponential d and modulus n
+   var textD = inputD.value;
+   var d = parseInt(inputd.value);
+   var n = parseInt(inputn.value);
+
+   // Decrypt the text using RSA and display it in the output element for decrypted text
+   var decrypted = decrypt(textD, d, n);
+   outputD.textContent = decrypted;
+});
+
+
+// Get the button element by id
+var button = document.getElementById("Enc");
+
+// Add a click event listener to the button
+button.addEventListener("click", function() {
+  // Get the input field element by class name
+  var input = document.querySelector(".Ptext");
+
+  // Get the p tag element by class name
+  var p = document.querySelector(".encrypted-text");
+
+  // Check if the input field is empty
+  if (input.value == "") {
+    // Display the message in the p tag
+    p.textContent = "Encrypted text will appear here.";
+  }
+});
+// Get the button element by id
+var button = document.getElementById("Dec");
+
+// Add a click event listener to the button
+button.addEventListener("click", function() {
+  // Get the input field elements by class name
+  var input1 = document.querySelector(".Dtext");
+  var input2 = document.querySelector(".d");
+  var input3 = document.querySelector(".n");
+
+  // Get the p tag element by class name
+  var p = document.querySelector(".decrypted-text");
+
+  // Check if any of the input fields is empty
+  if (input1.value == "" || input2.value == "" || input3.value == "") {
+    // Display the message in the p tag
+    p.textContent = "Decrypted text will appear here.";
+  }
+});
+</script>
+    
